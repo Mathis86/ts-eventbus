@@ -31,7 +31,7 @@ export default class EventBus<TEvents extends Record<string, any>> {
       return newId
    }
 
-   clear<K extends keyof TEvents>(
+   off<K extends keyof TEvents>(
       event: K, 
       uuid: number
    ) {
@@ -42,7 +42,7 @@ export default class EventBus<TEvents extends Record<string, any>> {
       }
    }
 
-   clearAll<K extends keyof TEvents>(event: K) {
+   offAll<K extends keyof TEvents>(event: K) {
       this.functions.delete(event)
    }
 

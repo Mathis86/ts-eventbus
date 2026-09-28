@@ -8,6 +8,6 @@ const uuid = bus.on("spawn", (chickenId, date) => {
 
 bus.emit("spawn", "123")
 
-bus.clear('spawn', uuid)
+bus.off('spawn', uuid)
 
 bus.emit("spawn", "456")
