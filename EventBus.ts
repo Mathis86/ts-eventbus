@@ -1,15 +1,19 @@
-export type ChickenEvents = {
+type Events = Record<string, unknown[]>
+
+export type DefineEvents<T extends Events> = T
+
+export type ChickenEvents = DefineEvents<{
    catch: [ chickenId: string, details: { amount: number, time: number, userId: string } ],
    spawn: [ chickenId: string, date?: Date ],
    ready: []
-}
+}>
 
 type Listener<
    TEvents extends Record<string, any>, 
    K extends keyof TEvents
 > = (...args: TEvents[K]) => void
 
-export default class EventBus<TEvents extends Record<string, any>> {
+export default class EventBus<TEvents extends Events> {
    private lastId = 0
    private functions = new Map<
       keyof TEvents, 
@@ -50,7 +54,6 @@ export default class EventBus<TEvents extends Record<string, any>> {
       event: K,
       ...args: TEvents[K]
    ) {
-      // const payload = args[0]
       this.functions.get(event)?.forEach(fn => fn(...args))
    }
 }
